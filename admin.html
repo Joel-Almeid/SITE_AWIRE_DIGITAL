@@ -1,0 +1,1381 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Administrativo - AWIRE DIGITAL</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1B5E20;
+            --primary-dark: #0D3D12;
+            --secondary: #004D40;
+            --accent: #FFC107;
+            --accent-dark: #E6A800;
+            --light: #F5F5F5;
+            --dark: #333333;
+            --gray: #E0E0E0;
+            --error: #F44336;
+            --success: #4CAF50;
+            --sidebar-width: 250px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'Segoe UI', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7f9;
+            color: var(--dark);
+            min-height: 100vh;
+            display: flex;
+        }
+        
+        /* Sidebar estilo CDR */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+            color: white;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            padding: 20px 0;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .logo-area {
+            padding: 50px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 20px;
+        }
+        
+        .logo-area img {
+            height: 50px;
+            margin-bottom: 10px;
+        }
+        
+        .logo-area h1 {
+            font-size: 20px;
+            font-weight: 600;
+        }
+        
+        .user-info {
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background-color: rgba(255, 255, 255, 0.1);
+            margin: 0 15px 20px;
+            border-radius: 8px;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--dark);
+        }
+        
+        .user-details {
+            flex: 1;
+        }
+        
+        .user-name {
+            font-weight: 500;
+            font-size: 14px;
+        }
+        
+        .user-role {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+        
+        .sidebar-menu {
+            list-style: none;
+            flex: 1;
+        }
+        
+        .menu-item {
+            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 5px 10px;
+            border-radius: 6px;
+        }
+        
+        .menu-item:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .menu-item.active {
+            background-color: var(--accent);
+            color: var(--dark);
+            font-weight: 500;
+        }
+        
+        .menu-item i {
+            width: 20px;
+            text-align: center;
+        }
+        
+        .menu-divider {
+            height: 1px;
+            background-color: rgba(255, 255, 255, 0.1);
+            margin: 15px 20px;
+        }
+        
+        .logout-btn {
+            margin: 15px;
+            padding: 12px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 6px;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .logout-btn:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 30px;
+            background-color: #f5f7f9;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            background-color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .page-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .header-actions {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .action-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+        
+        .action-btn:hover {
+            background-color: var(--secondary);
+        }
+        
+        /* Dashboard Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            background-color: rgba(27, 94, 32, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 20px;
+        }
+        
+        .stat-info {
+            flex: 1;
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        /* Content Sections */
+        .content-section {
+            display: none;
+            background-color: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+        }
+        
+        .content-section.active {
+            display: block;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        /* Artesanatos Grid */
+        .artesanatos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        
+        .artesanato-card {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s;
+            border: 1px solid #eee;
+        }
+        
+        .artesanato-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .artesanato-img {
+            height: 160px;
+            background-color: #e9ecef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6c757d;
+        }
+        
+        .artesanato-info {
+            padding: 15px;
+        }
+        
+        .artesanato-name {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--dark);
+        }
+        
+        .artesanato-details {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+        
+        .artesanato-price {
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        
+        .artesanato-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+            font-size: 14px;
+        }
+        
+        .btn-edit {
+            background-color: var(--accent);
+            color: var(--dark);
+        }
+        
+        .btn-delete {
+            background-color: #ffebee;
+            color: var(--error);
+        }
+        
+        /* Tabelas */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .data-table th,
+        .data-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .data-table th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .data-table tr:hover {
+            background-color: #f8f9fa;
+        }
+        
+        /* Formulários */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+        
+        textarea.form-control {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        /* Configurações específicas */
+        .profile-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        
+        .profile-card {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 20px;
+            border: 1px solid #eee;
+        }
+        
+        .profile-card-title {
+            font-size: 18px;
+            color: var(--primary);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .info-group {
+            margin-bottom: 15px;
+        }
+        
+        .info-label {
+            font-weight: 600;
+            color: #555;
+            margin-bottom: 5px;
+        }
+        
+        .info-value {
+            color: #333;
+            padding: 8px 0;
+        }
+        
+        .password-form {
+            margin-top: 20px;
+        }
+        
+        .save-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+        
+        .save-btn:hover {
+            background-color: var(--secondary);
+        }
+        
+        /* Participantes */
+        .participantes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .participante-card {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 20px;
+            border: 1px solid #eee;
+            transition: all 0.3s;
+        }
+        
+        .participante-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .participante-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .participante-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--dark);
+            font-size: 24px;
+        }
+        
+        .participante-info {
+            flex: 1;
+        }
+        
+        .participante-name {
+            font-weight: 600;
+            font-size: 18px;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+        
+        .participante-role {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .participante-details {
+            margin-bottom: 15px;
+        }
+        
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .detail-label {
+            font-weight: 500;
+            color: #555;
+        }
+        
+        .detail-value {
+            color: #333;
+        }
+        
+        .participante-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        /* Modal para adicionar artesanato */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-overlay.active {
+            display: flex;
+        }
+        
+        .modal {
+            background-color: white;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #999;
+        }
+        
+        .modal-body {
+            padding: 20px;
+        }
+        
+        .modal-footer {
+            padding: 15px 20px;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+        
+        /* Upload de arquivo */
+        .file-upload {
+            border: 2px dashed #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .file-upload:hover {
+            border-color: var(--primary);
+        }
+        
+        .file-upload i {
+            font-size: 32px;
+            color: #999;
+            margin-bottom: 10px;
+        }
+        
+        .file-input {
+            display: none;
+        }
+        
+        /* Responsividade */
+        @media (max-width: 992px) {
+            .sidebar {
+                transform: translateX(-100%);
+                z-index: 1000;
+                transition: transform 0.3s;
+            }
+            
+            .sidebar.active {
+                transform: translateX(0);
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            .profile-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .participantes-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .artesanatos-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+            
+            .header-actions {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .modal {
+                width: 95%;
+                margin: 20px;
+            }
+            
+            .participante-header {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo-area">
+            <img src="images/logo_awire.png" alt="AWIRE DIGITAL">
+            <h1>AWIRE DIGITAL</h1>
+        </div>
+        
+        <div class="user-info">
+            <div class="user-avatar">A</div>
+            <div class="user-details">
+                <div class="user-name">Administrador</div>
+                <div class="user-role">Super Admin</div>
+            </div>
+        </div>
+        
+        <ul class="sidebar-menu">
+            <li class="menu-item active" data-section="visao-geral">
+                <i class="fas fa-chart-pie"></i>
+                <span>Visão Geral</span>
+            </li>
+            <li class="menu-item" data-section="artesanatos">
+                <i class="fas fa-tshirt"></i>
+                <span>Artesanatos</span>
+            </li>
+            <li class="menu-item" data-section="participantes">
+                <i class="fas fa-users"></i>
+                <span>Participantes</span>
+            </li>
+            <!-- Removida a aba de Aulas conforme solicitado -->
+            <li class="menu-divider"></li>
+            <li class="menu-item" data-section="engajamento">
+                <i class="fas fa-chart-line"></i>
+                <span>Engajamento</span>
+            </li>
+            <li class="menu-item" data-section="configuracoes">
+                <i class="fas fa-cog"></i>
+                <span>Configurações</span>
+            </li>
+        </ul>
+        
+        <button class="logout-btn" id="logout-btn">
+            <i class="fas fa-sign-out-alt"></i>
+            Sair
+        </button>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="header">
+            <h2 class="page-title">Visão Geral</h2>
+            <div class="header-actions">
+                <button class="action-btn">
+                    <i class="fas fa-plus"></i>
+                    Novo Projeto
+                </button>
+                <button class="action-btn">
+                    <i class="fas fa-download"></i>
+                    Exportar
+                </button>
+            </div>
+        </div>
+        
+        <!-- Visão Geral Section -->
+        <div class="content-section active" id="visao-geral">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-tshirt"></i>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="total-artesanatos">42</div>
+                        <div class="stat-label">Artesanatos</div>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="total-participantes">28</div>
+                        <div class="stat-label">Participantes</div>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="total-aulas">15</div>
+                        <div class="stat-label">Aulas Realizadas</div>
+                    </div>
+                </div>
+                
+    
+            </div>
+            
+            <div class="content-section">
+                <div class="section-header">
+                    <h3 class="section-title">Artesanatos Recentes</h3>
+                    <button class="action-btn" id="btn-novo-artesanato">
+                        <i class="fas fa-plus"></i>
+                        Novo Artesanato
+                    </button>
+                </div>
+                
+                <div class="artesanatos-grid" id="artesanatos-recentes">
+                    <!-- Artesanatos serão carregados dinamicamente aqui -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- Artesanatos Section -->
+        <div class="content-section" id="artesanatos">
+            <div class="section-header">
+                <h3 class="section-title">Gerenciamento de Artesanatos</h3>
+                <button class="action-btn" id="btn-adicionar-artesanato">
+                    <i class="fas fa-plus"></i>
+                    Adicionar Artesanato
+                </button>
+            </div>
+            
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Categoria</th>
+                        <th>Preço</th>
+                        <th>Status</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="tabela-artesanatos">
+                    <!-- Conteúdo será preenchido dinamicamente -->
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Participantes Section -->
+        <div id="participantes" class="content-section">
+    
+    <button class="btn btn-primary" id="btn-add-participante" style="margin-bottom: 20px;">
+        <i class="fas fa-plus"></i> Adicionar Participante
+    </button>
+            
+            <div class="participantes-grid">
+                <div class="participante-card">
+                    <div class="participante-header">
+                        <div class="participante-avatar">M</div>
+                        <div class="participante-info">
+                            <div class="participante-name">Maria Silva</div>
+                            <div class="participante-role">Artesã</div>
+                        </div>
+                    </div>
+
+                    
+                    <div class="participante-details">
+                        <div class="detail-item">
+                            <span class="detail-label">E-mail:</span>
+                            <span class="detail-value">maria.silva@email.com</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Telefone:</span>
+                            <span class="detail-value">(63) 99999-9999</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Artesanatos:</span>
+                            <span class="detail-value">12</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Status:</span>
+                            <span class="detail-value" style="color: var(--success);">Ativo</span>
+                        </div>
+                    </div>
+                    <div class="participante-actions">
+                        <button class="btn btn-edit"><i class="fas fa-edit"></i> Editar</button>
+                        <button class="btn btn-delete"><i class="fas fa-trash"></i> Excluir</button>
+                    </div>
+                </div>
+                
+                <div class="participante-card">
+                    <div class="participante-header">
+                        <div class="participante-avatar">J</div>
+                        <div class="participante-info">
+                            <div class="participante-name">João Santos</div>
+                            <div class="participante-role">Artesão</div>
+                        </div>
+                    </div>
+                    <div class="participante-details">
+                        <div class="detail-item">
+                            <span class="detail-label">E-mail:</span>
+                            <span class="detail-value">joao.santos@email.com</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Telefone:</span>
+                            <span class="detail-value">(63) 98888-8888</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Artesanatos:</span>
+                            <span class="detail-value">8</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Status:</span>
+                            <span class="detail-value" style="color: var(--success);">Ativo</span>
+                        </div>
+                    </div>
+                    <div class="participante-actions">
+                        <button class="btn btn-edit"><i class="fas fa-edit"></i> Editar</button>
+                        <button class="btn btn-delete"><i class="fas fa-trash"></i> Excluir</button>
+                    </div>
+                </div>
+                
+                <div class="participante-card">
+                    <div class="participante-header">
+                        <div class="participante-avatar">A</div>
+                        <div class="participante-info">
+                            <div class="participante-name">Ana Oliveira</div>
+                            <div class="participante-role">Artesã</div>
+                        </div>
+                    </div>
+                    <div class="participante-details">
+                        <div class="detail-item">
+                            <span class="detail-label">E-mail:</span>
+                            <span class="detail-value">ana.oliveira@email.com</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Telefone:</span>
+                            <span class="detail-value">(63) 97777-7777</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Artesanatos:</span>
+                            <span class="detail-value">5</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Status:</span>
+                            <span class="detail-value" style="color: var(--error);">Inativo</span>
+                        </div>
+                    </div>
+                    <div class="participante-actions">
+                        <button class="btn btn-edit"><i class="fas fa-edit"></i> Editar</button>
+                        <button class="btn btn-delete"><i class="fas fa-trash"></i> Excluir</button>
+                    </div>
+                </div>
+                
+                <div class="participante-card">
+                    <div class="participante-header">
+                        <div class="participante-avatar">P</div>
+                        <div class="participante-info">
+                            <div class="participante-name">Pedro Costa</div>
+                            <div class="participante-role">Artesão</div>
+                        </div>
+                    </div>
+                    <div class="participante-details">
+                        <div class="detail-item">
+                            <span class="detail-label">E-mail:</span>
+                            <span class="detail-value">pedro.costa@email.com</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Telefone:</span>
+                            <span class="detail-value">(63) 96666-6666</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Artesanatos:</span>
+                            <span class="detail-value">3</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Status:</span>
+                            <span class="detail-value" style="color: var(--success);">Ativo</span>
+                        </div>
+                    </div>
+                    <div class="participante-actions">
+                        <button class="btn btn-edit"><i class="fas fa-edit"></i> Editar</button>
+                        <button class="btn btn-delete"><i class="fas fa-trash"></i> Excluir</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Engajamento Section -->
+        <div class="content-section" id="engajamento">
+            <div class="section-header">
+                <h3 class="section-title">Estatísticas de Engajamento</h3>
+            </div>
+            <p>Conteúdo das estatísticas de engajamento...</p>
+        </div>
+        
+        <!-- Configurações Section -->
+        <div class="content-section" id="configuracoes">
+            <div class="section-header">
+                <h3 class="section-title">Configurações do Sistema</h3>
+            </div>
+            
+            <div class="profile-container">
+                <div class="profile-card">
+                    <h3 class="profile-card-title">Meu Perfil</h3>
+                    
+                    <div class="info-group">
+                        <div class="info-label">Nome Completo</div>
+                        <div class="info-value">Administrador AWIRE DIGITAL</div>
+                    </div>
+                    
+                    <div class="info-group">
+                        <div class="info-label">E-mail</div>
+                        <div class="info-value">admin123@exemplo.com</div>
+                    </div>
+                    
+                    <div class="info-group">
+                        <div class="info-label">Instituição</div>
+                        <div class="info-value">IFTO</div>
+                    </div>
+                    
+                    <button class="save-btn">
+                        <i class="fas fa-save"></i>
+                        Salvar Alterações
+                    </button>
+                </div>
+                
+                <div class="profile-card">
+                    <h3 class="profile-card-title">Alterar Senha</h3>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Senha Atual</label>
+                        <input type="password" class="form-control" placeholder="Digite sua senha atual">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Nova Senha</label>
+                        <input type="password" class="form-control" placeholder="Digite a nova senha">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Confirmar Nova Senha</label>
+                        <input type="password" class="form-control" placeholder="Confirme a nova senha">
+                    </div>
+                    
+                    <button class="save-btn">
+                        <i class="fas fa-key"></i>
+                        Alterar Senha
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para Adicionar Artesanato -->
+    <div class="modal-overlay" id="modal-artesanato">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Adicionar Novo Artesanato</h3>
+                <button class="modal-close" id="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="form-artesanato">
+    <input type="hidden" id="artesanato-id">
+
+    <div class="form-group">
+        <label for="artesanato-nome">Nome</label>
+        ...
+                        <input type="text" class="form-control" id="artesanato-nome" placeholder="Ex: Cesto Karajá" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Descrição</label>
+                        <textarea class="form-control" id="artesanato-descricao" placeholder="Breve descrição do produto" required></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Preço (R$)</label>
+                        <input type="number" class="form-control" id="artesanato-preco" placeholder="0,00" step="0.01" min="0" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Categoria</label>
+                        <input type="text" class="form-control" id="artesanato-categoria" placeholder="Ex: Cestaria" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Imagem do Produto</label>
+                        <div class="file-upload" id="file-upload-area">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Arraste e solte uma imagem aqui ou clique para selecionar</p>
+                            <input type="file" class="file-input" id="file-input" accept="image/*">
+                            <p class="file-name" id="file-name">Nenhum arquivo escolhido</p>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Conceito</label>
+                        <input type="text" class="form-control" id="artesanato-conceito" placeholder="Conceito do artesanato">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Sobre o Artesanato</label>
+                        <textarea class="form-control" id="artesanato-sobre" placeholder="Detalhes sobre a técnica, materiais utilizados, etc."></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-delete" id="cancel-form">Cancelar</button>
+                <button class="save-btn" id="submit-form">
+                    <i class="fas fa-plus"></i>
+                    Adicionar Artesanato
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Array para armazenar os artesanatos
+        let artesanatos = [
+            {
+                nome: "Cesto Karajá",
+                descricao: "Tecido em palha, 30cm",
+                preco: 120.00,
+                categoria: "Cestaria",
+                imagem: "cesto_karaja.jpg"
+            },
+            {
+                nome: "Colar de Sementes",
+                descricao: "Sementes naturais, 45cm",
+                preco: 85.00,
+                categoria: "Acessórios",
+                imagem: "colar_sementes.jpg"
+            },
+            {
+                nome: "Máscara Ritualística",
+                descricao: "Madeira entalhada, 25cm",
+                preco: 210.00,
+                categoria: "Decoração",
+                imagem: "mascara_ritualistica.jpg"
+            }
+        ];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Carregar artesanatos ao iniciar
+            carregarArtesanatos();
+            atualizarEstatisticas();
+            
+            // Navegação do menu lateral
+            const menuItems = document.querySelectorAll('.menu-item');
+            const contentSections = document.querySelectorAll('.content-section');
+            const pageTitle = document.querySelector('.page-title');
+            
+            menuItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    // Remove a classe active de todos os itens
+                    menuItems.forEach(i => i.classList.remove('active'));
+                    // Adiciona a classe active ao item clicado
+                    this.classList.add('active');
+                    
+                    // Mostra a seção correspondente
+                    const sectionId = this.getAttribute('data-section');
+                    contentSections.forEach(section => {
+                        section.classList.remove('active');
+                        if (section.id === sectionId) {
+                            section.classList.add('active');
+                            
+                            // Atualiza o título da página
+                            const sectionName = this.querySelector('span').textContent;
+                            pageTitle.textContent = sectionName;
+                        }
+                    });
+                });
+            });
+            
+            // Logout button
+const logoutBtn = document.getElementById('logout-btn');
+logoutBtn.addEventListener('click', function() {
+    if (confirm('Tem certeza que deseja sair?')) {
+        // Esta linha redireciona para a página inicial
+        window.location.href = 'index.html'; 
+    }
+});
+            
+            // Modal para adicionar artesanato
+            const modal = document.getElementById('modal-artesanato');
+            const btnNovoArtesanato = document.getElementById('btn-novo-artesanato');
+            const btnAdicionarArtesanato = document.getElementById('btn-adicionar-artesanato');
+            const closeModal = document.getElementById('close-modal');
+            const cancelForm = document.getElementById('cancel-form');
+            const submitForm = document.getElementById('submit-form');
+            const fileUploadArea = document.getElementById('file-upload-area');
+            const fileInput = document.getElementById('file-input');
+            const fileName = document.getElementById('file-name');
+            
+            // Abrir modal
+            function openModal() {
+                modal.classList.add('active');
+            }
+            
+            // Fechar modal
+            function closeModalFunc() {
+                modal.classList.remove('active');
+            }
+            
+            // Event listeners para abrir modal
+            if (btnNovoArtesanato) {
+                btnNovoArtesanato.addEventListener('click', openModal);
+            }
+            
+            if (btnAdicionarArtesanato) {
+                btnAdicionarArtesanato.addEventListener('click', openModal);
+            }
+            
+            // Event listeners para fechar modal
+            closeModal.addEventListener('click', closeModalFunc);
+            cancelForm.addEventListener('click', closeModalFunc);
+            
+            // Fechar modal clicando fora dele
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    closeModalFunc();
+                }
+            });
+            
+            // Upload de arquivo
+            fileUploadArea.addEventListener('click', function() {
+                fileInput.click();
+            });
+            
+            fileInput.addEventListener('change', function() {
+                if (fileInput.files.length > 0) {
+                    fileName.textContent = fileInput.files[0].name;
+                } else {
+                    fileName.textContent = 'Nenhum arquivo escolhido';
+                }
+            });
+            
+            // Arrastar e soltar arquivo
+            fileUploadArea.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                fileUploadArea.style.borderColor = '#1B5E20';
+                fileUploadArea.style.backgroundColor = 'rgba(27, 94, 32, 0.05)';
+            });
+            
+            fileUploadArea.addEventListener('dragleave', function() {
+                fileUploadArea.style.borderColor = '#ddd';
+                fileUploadArea.style.backgroundColor = 'transparent';
+            });
+            
+            fileUploadArea.addEventListener('drop', function(e) {
+                e.preventDefault();
+                fileUploadArea.style.borderColor = '#ddd';
+                fileUploadArea.style.backgroundColor = 'transparent';
+                
+                if (e.dataTransfer.files.length) {
+                    fileInput.files = e.dataTransfer.files;
+                    fileName.textContent = e.dataTransfer.files[0].name;
+                }
+            });
+            
+            // Submeter formulário
+            submitForm.addEventListener('click', function() {
+                const form = document.getElementById('form-artesanato');
+                if (form.checkValidity()) {
+                    // Adicionar novo artesanato
+                    const novoArtesanato = {
+                        nome: document.getElementById('artesanato-nome').value,
+                        descricao: document.getElementById('artesanato-descricao').value,
+                        preco: parseFloat(document.getElementById('artesanato-preco').value),
+                        categoria: document.getElementById('artesanato-categoria').value,
+                        imagem: fileName.textContent !== 'Nenhum arquivo escolhido' ? fileName.textContent : 'default.jpg',
+                        conceito: document.getElementById('artesanato-conceito').value,
+                        sobre: document.getElementById('artesanato-sobre').value
+                    };
+                    
+                    artesanatos.unshift(novoArtesanato); // Adiciona no início do array
+                    
+                    // Atualizar a interface
+                    carregarArtesanatos();
+                    atualizarEstatisticas();
+                    
+                    alert('Artesanato adicionado com sucesso!');
+                    form.reset();
+                    fileName.textContent = 'Nenhum arquivo escolhido';
+                    closeModalFunc();
+                } else {
+                    alert('Por favor, preencha todos os campos obrigatórios.');
+                }
+            });
+        });
+
+        // Função para carregar artesanatos na interface
+        function carregarArtesanatos() {
+            const artesanatosRecentes = document.getElementById('artesanatos-recentes');
+            const tabelaArtesanatos = document.getElementById('tabela-artesanatos');
+            
+            // Limpar conteúdo existente
+            if (artesanatosRecentes) artesanatosRecentes.innerHTML = '';
+            if (tabelaArtesanatos) tabelaArtesanatos.innerHTML = '';
+            
+            // Adicionar artesanatos à visão geral (máximo de 6)
+            artesanatos.slice(0, 6).forEach(artesanato => {
+                if (artesanatosRecentes) {
+                    const card = document.createElement("div");
+                    card.classList.add("artesanato-card");
+                    
+                    card.innerHTML = `
+                        <div class="artesanato-img">
+                            <i class="fas fa-image fa-2x"></i>
+                        </div>
+                        <div class="artesanato-info">
+                            <h4 class="artesanato-name">${artesanato.nome}</h4>
+                            <div class="artesanato-details">${artesanato.descricao}</div>
+                            <div class="artesanato-price">R$ ${artesanato.preco.toFixed(2)}</div>
+                            <div class="artesanato-actions">
+                                <button class="btn btn-edit"><i class="fas fa-edit"></i> Editar</button>
+                                <button class="btn btn-delete"><i class="fas fa-trash"></i> Excluir</button>
+                            </div>
+                        </div>
+                    `;
+                    artesanatosRecentes.appendChild(card);
+                }
+            });
+            
+            // Adicionar artesanatos à tabela de gerenciamento
+            artesanatos.forEach(artesanato => {
+                if (tabelaArtesanatos) {
+                    const row = document.createElement("tr");
+                    
+                    row.innerHTML = `
+                        <td>${artesanato.nome}</td>
+                        <td>${artesanato.categoria}</td>
+                        <td>R$ ${artesanato.preco.toFixed(2)}</td>
+                        <td><span style="color: var(--success);">Ativo</span></td>
+                        <td>
+                            <button class="btn btn-edit"><i class="fas fa-edit"></i></button>
+                            <button class="btn btn-delete"><i class="fas fa-trash"></i></button>
+                        </td>
+                    `;
+                    tabelaArtesanatos.appendChild(row);
+                }
+            });
+        }
+
+        // Função para atualizar estatísticas
+        function atualizarEstatisticas() {
+            document.getElementById('total-artesanatos').textContent = artesanatos.length;
+            // Aqui você pode adicionar lógica para calcular participantes, aulas e vendas
+            // Por enquanto, vamos manter os valores fixos ou incrementar conforme adição de artesanatos
+            document.getElementById('total-participantes').textContent = Math.floor(artesanatos.length * 0.67);
+            document.getElementById('total-aulas').textContent = Math.floor(artesanatos.length * 0.36);
+        }
+    </script>
+
+<div class="modal-overlay" id="modal-participante">
+    <div class="modal">
+        <div class="modal-header">
+            <h3 class="modal-title" id="modal-participante-title">Adicionar Novo Participante</h3>
+            <button class="modal-close">&times;</button>
+        </div>
+        <form id="form-participante">
+             <input type="hidden" id="participante-id">
+            <div class="form-group">
+                <label for="participante-nome">Nome</label>
+                <input type="text" id="participante-nome" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="participante-funcao">Função</label>
+                <input type="text" id="participante-funcao" class="form-control" required>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Salvar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="js/script.js"></script>
+
+</body>
+</html>
