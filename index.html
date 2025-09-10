@@ -23,106 +23,132 @@
         }
     </script>
     <style>
-        html {
-            scroll-behavior: smooth;
+    /* Estilos do AWIRE DIGITAL */
+    html {
+        scroll-behavior: smooth;
+    }
+    body {
+        font-family: 'Poppins', sans-serif;
+        background-color: #f8f9fa;
+    }
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Montserrat', sans-serif;
+    }
+    .logo-pulse {
+        animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+        0% {
+            transform: scale(1);
+            filter: drop-shadow(0 0 0 rgba(27, 94, 32, 0.7));
         }
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #f8f9fa;
+        50% {
+            transform: scale(1.05);
+            filter: drop-shadow(0 0 10px rgba(27, 94, 32, 0.7));
         }
-        h1, h2, h3, h4, h5, h6 {
-            font-family: 'Montserrat', sans-serif;
+        100% {
+            transform: scale(1);
+            filter: drop-shadow(0 0 0 rgba(27, 94, 32, 0.7));
         }
-        .logo-pulse {
-            animation: pulse 2s infinite;
-        }
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-                filter: drop-shadow(0 0 0 rgba(27, 94, 32, 0.7));
-            }
-            50% {
-                transform: scale(1.05);
-                filter: drop-shadow(0 0 10px rgba(27, 94, 32, 0.7));
-            }
-            100% {
-                transform: scale(1);
-                filter: drop-shadow(0 0 0 rgba(27, 94, 32, 0.7));
-            }
-        }
-        .active-section {
-            color: #FFC107;
-            font-weight: 600;
-            border-bottom: 2px solid #FFC107;
-        }
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 1.5rem;
-        }
-        .card-artesanato {
-            transition: transform 0.3s ease;
-        }
-        .card-artesanato:hover {
-            transform: translateY(-5px);
-        }
-        .whatsapp-float {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background-color: #25D366;
-            color: white;
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
-            z-index: 1000;
-            transition: all 0.3s;
-        }
-        .whatsapp-float:hover {
-            transform: scale(1.1);
-        }
-        .section-divider {
-            height: 4px;
-            background: linear-gradient(90deg, #1B5E20, #004D40);
-            width: 80px;
-            margin: 0 auto;
-            border-radius: 2px;
-        }
-        .btn-primary {
-            background-color: #1B5E20;
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.5rem;
-            font-weight: 600;
-            transition: all 0.3s;
-            display: inline-block;
-        }
-        .btn-primary:hover {
-            background-color: #004D40;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        .btn-secondary {
-            background-color: #FFC107;
-            color: #004D40;
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.5rem;
-            font-weight: 600;
-            transition: all 0.3s;
-            display: inline-block;
-        }
-        .btn-secondary:hover {
-            background-color: #FFB300;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-    </style>
-</head>
+    }
+    .active-section {
+        color: #FFC107;
+        font-weight: 600;
+        border-bottom: 2px solid #FFC107;
+    }
+    .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 1.5rem;
+    }
+    .card-artesanato {
+        transition: transform 0.3s ease;
+    }
+    .card-artesanato:hover {
+        transform: translateY(-5px);
+    }
+    .whatsapp-float {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        background-color: #25D366;
+        color: white;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+        z-index: 1000;
+        transition: all 0.3s;
+    }
+    .whatsapp-float:hover {
+        transform: scale(1.1);
+    }
+    .section-divider {
+        height: 4px;
+        background: linear-gradient(90deg, #1B5E20, #004D40);
+        width: 80px;
+        margin: 0 auto;
+        border-radius: 2px;
+    }
+    .btn-primary {
+        background-color: #1B5E20;
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border-radius: 0.5rem;
+        font-weight: 600;
+        transition: all 0.3s;
+        display: inline-block;
+    }
+    .btn-primary:hover {
+        background-color: #004D40;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .btn-secondary {
+        background-color: #FFC107;
+        color: #004D40;
+        padding: 0.75rem 1.5rem;
+        border-radius: 0.5rem;
+        font-weight: 600;
+        transition: all 0.3s;
+        display: inline-block;
+    }
+    .btn-secondary:hover {
+        background-color: #FFB300;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Estilos para as novas seções (adaptado para o AWIRE) */
+    #login, #cadastro, #dashboard {
+        background-color: #f8f9fa; /* Fundo claro para o painel */
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-top: 6rem;
+    }
+    #login form, #cadastro form {
+        max-width: 400px;
+        margin: 0 auto;
+    }
+    #login a, #cadastro a {
+        color: #1B5E20; /* Verde Escuro */
+    }
+    .hidden {
+        display: none !important;
+    }
+</style>
+
+<body>
+
+</html>
+
+
 <body>
     
     <!-- Cabeçalho e Menu de Navegação -->
@@ -201,7 +227,7 @@
                 <!-- Coordenador -->
                 <article class="border border-[#004D40] rounded-lg p-6 shadow-sm bg-white">
                     <h3 class="font-semibold text-lg text-[#004D40] mb-2">Adriano Ribeiro Silva</h3>
-                    <p><strong>Função:</strong> Coordenador e idealizador</p>
+                    <p><strong>Função:</strong> Coordenador</p>
                     <p><strong>Vínculo:</strong> IFTO</p>
                     <p><strong>Atuação:</strong> Coordenação geral do projeto e articulação com as comunidades.</p>
                 </article>
@@ -211,7 +237,7 @@
                     <h3 class="font-semibold text-lg text-[#004D40] mb-2">Joel de Almeida</h3>
                     <p><strong>Função:</strong> Bolsista</p>
                     <p><strong>Vínculo:</strong> IFTO</p>
-                    <p><strong>Atuação:</strong>Estudante do curso de Informática, atua como professor no curso e trabalha com a produção dos materiais didáticos.</p>
+                    <p><strong>Atuação:</strong>Estudante do curso de Informática, atua como professor no curso e trabalha com a produção dos materiais didáticos, trabalhando no desenvolvimento do site.</p>
                 </article>
                 <article class="border border-[#004D40] rounded-lg p-6 shadow-sm bg-white">
                     <h3 class="font-semibold text-lg text-[#004D40] mb-2">Fernanda de Jesus</h3>
@@ -225,7 +251,31 @@
                     <p><strong>Vínculo:</strong> IFTO</p>
                     <p><strong>Atuação:</strong> Mediação cultural e comunicação com os alunos.</p>
                 </article>
+                <article class="border border-[#004D40] rounded-lg p-6 shadow-sm bg-white">
+    <h3 class="font-semibold text-lg text-[#004D40] mb-2">Ijanaru Javaé</h3>
+    <p><strong>Função:</strong> Estudante</p>
+    <p><strong>Vínculo:</strong> IFTO</p>
+    <p><strong>Atuação:</strong> Atua no apoio às oficinas e na mediação cultural.</p>
+</article>
+
+<article class="border border-[#004D40] rounded-lg p-6 shadow-sm bg-white">
+    <h3 class="font-semibold text-lg text-[#004D40] mb-2">Gabriel Maluiri Vinícius Batista Javaé</h3>
+    <p><strong>Função:</strong> Bolsista</p>
+    <p><strong>Vínculo:</strong> IFTO</p>
+    <p><strong>Atuação:</strong> Técnico em Informática. Auxilia na mediação cultural e na aplicação das atividades de inclusão digital.</p>
+</article>
+
+<article class="border border-[#004D40] rounded-lg p-6 shadow-sm bg-white">
+    <h3 class="font-semibold text-lg text-[#004D40] mb-2">Evellyn Lima da Silva</h3>
+    <p><strong>Função:</strong> Estudante voluntária</p>
+    <p><strong>Vínculo:</strong> IFTO</p>
+    <p><strong>Atuação:</strong> Apoia a organização de conteúdos digitais e colabora nas oficinas de capacitação tecnológica.</p>
+</article>
                 
+
+
+
+
                 <!-- Voluntários -->
                 <article class="border border-[#004D40] rounded-lg p-6 shadow-sm bg-white">
                     <h3 class="font-semibold text-lg text-[#004D40] mb-2">Caio Gobbo</h3>
@@ -237,7 +287,7 @@
                     <h3 class="font-semibold text-lg text-[#004D40] mb-2">Vitor Vilas Boas</h3>
                     <p><strong>Função:</strong> Voluntário</p>
                     <p><strong>Vínculo:</strong> IFTO</p>
-                    <p><strong>Atuação:</strong> Apoio em eventos e comunicação visual.</p>
+                    <p><strong>Atuação:</strong> Apoio em eventos e comunicação visual e orientador no desenvolvimento pedagogico do site.</p>
                 </article>
             </div>
         </div>
@@ -402,13 +452,14 @@
                 </div>
             </div>
             <div class="border-t border-gray-700 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
-                <p class="text-gray-400 text-sm mb-4 md:mb-0">&copy; 2025 AWIRE DIGITAL. Todos os direitos reservados.</p>
-                <div class="flex space-x-4">
-                    <a href="#" class="text-gray-400 hover:text-white transition-colors">Termos de Uso</a>
-                    <a href="#" class="text-gray-400 hover:text-white transition-colors">Política de Privacidade</a>
-                </div>
-            </div>
+    <p class="text-gray-400 text-sm mb-4 md:mb-0">&copy; 2025 AWIRE DIGITAL. Todos os direitos reservados.</p>
+    <div class="flex space-x-4">
+        <a href="login.html" class="text-gray-400 hover:text-white transition-colors">Login</a><a href="#" class="text-gray-400 hover:text-white transition-colors">Termos de Uso</a>
+        <a href="#" class="text-gray-400 hover:text-white transition-colors">Política de Privacidade</a>
+    </div>
+</div>
         </div>
+
     </footer>
 
     <!-- Botão flutuante de WhatsApp -->
@@ -442,5 +493,6 @@
             highlightNavigation();
         });
     </script>
+
 </body>
 </html>
